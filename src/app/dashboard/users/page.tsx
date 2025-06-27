@@ -6,12 +6,29 @@ import { useEffect, useState } from "react"
 import { Plus, Search, Edit, Trash2, Eye, EyeOff } from "lucide-react"
 
 interface User {
-  id: number
+  id: string
+  roll_number: string
   name: string
   email: string
   user_type: string
   is_active: boolean
   created_at: string
+  course_name?: string
+  course_code?: string
+  department_name?: string
+  department_code?: string
+}
+
+interface CourseOption {
+  id: number
+  course_name: string
+  course_code: string
+}
+
+interface DepartmentOption {
+  id: number
+  department_name: string
+  department_code: string
 }
 
 export default function UserManagementPage() {
@@ -20,6 +37,8 @@ export default function UserManagementPage() {
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [selectedUserType, setSelectedUserType] = useState("all")
   const [searchTerm, setSearchTerm] = useState("")
+  const [courseOptions, setCourseOptions] = useState<CourseOption[]>([])
+  const [departmentOptions, setDepartmentOptions] = useState<DepartmentOption[]>([])
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 10,
@@ -34,6 +53,8 @@ export default function UserManagementPage() {
     phone: "",
     address: "",
     dateOfBirth: "",
+    courseId: "",
+    departmentId: "",
   })
 
   const [createdUser, setCreatedUser] = useState<any>(null)
@@ -41,6 +62,7 @@ export default function UserManagementPage() {
 
   useEffect(() => {
     fetchUsers()
+    fetchOptions()
   }, [selectedUserType, pagination.page])
 
   const fetchUsers = async () => {
@@ -60,6 +82,19 @@ export default function UserManagementPage() {
     }
   }
 
+  const fetchOptions = async () => {
+    try {
+      const response = await fetch("/api/admin/users?options=true")
+      if (response.ok) {
+        const data = await response.json()
+        setCourseOptions(data.courses)
+        setDepartmentOptions(data.departments)
+      }
+    } catch (error) {
+      console.error("Error fetching options:", error)
+    }
+  }
+
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
@@ -68,7 +103,11 @@ export default function UserManagementPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newUser),
+        body: JSON.stringify({
+          ...newUser,
+          courseId: newUser.courseId ? Number.parseInt(newUser.courseId) : null,
+          departmentId: newUser.departmentId ? Number.parseInt(newUser.departmentId) : null,
+        }),
       })
 
       if (response.ok) {
@@ -81,7 +120,10 @@ export default function UserManagementPage() {
           phone: "",
           address: "",
           dateOfBirth: "",
+          courseId: "",
+          departmentId: "",
         })
+        setShowCreateModal(false)
         fetchUsers()
       } else {
         const error = await response.json()
@@ -95,7 +137,8 @@ export default function UserManagementPage() {
   const filteredUsers = users.filter(
     (user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase()),
+      user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.roll_number.includes(searchTerm),
   )
 
   if (loading) {
@@ -125,7 +168,7 @@ export default function UserManagementPage() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-base-content/50" />
                 <input
                   type="text"
-                  placeholder="Search users..."
+                  placeholder="Search by name, email, or roll number..."
                   className="input input-bordered pl-10 w-full"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -156,9 +199,11 @@ export default function UserManagementPage() {
             <table className="table table-zebra">
               <thead>
                 <tr>
+                  <th>Roll Number</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Type</th>
+                  <th>Course/Department</th>
                   <th>Status</th>
                   <th>Created</th>
                   <th>Actions</th>
@@ -167,6 +212,9 @@ export default function UserManagementPage() {
               <tbody>
                 {filteredUsers.map((user) => (
                   <tr key={user.id}>
+                    <td>
+                      <span className="font-mono text-sm bg-base-200 px-2 py-1 rounded">{user.roll_number}</span>
+                    </td>
                     <td>
                       <div className="flex items-center gap-3">
                         <div className="avatar placeholder">
@@ -192,6 +240,22 @@ export default function UserManagementPage() {
                       >
                         {user.user_type}
                       </span>
+                    </td>
+                    <td>
+                      <div className="text-sm">
+                        {user.course_name && (
+                          <div>
+                            <span className="font-medium">{user.course_name}</span>
+                            <div className="text-xs text-base-content/70">{user.course_code}</div>
+                          </div>
+                        )}
+                        {user.department_name && (
+                          <div>
+                            <span className="font-medium">{user.department_name}</span>
+                            <div className="text-xs text-base-content/70">{user.department_code}</div>
+                          </div>
+                        )}
+                      </div>
                     </td>
                     <td>
                       <span className={`badge ${user.is_active ? "badge-success" : "badge-error"}`}>
@@ -245,67 +309,130 @@ export default function UserManagementPage() {
       {/* Create User Modal */}
       {showCreateModal && (
         <div className="modal modal-open">
-          <div className="modal-box">
+          <div className="modal-box max-w-2xl">
             <h3 className="font-bold text-lg mb-4">Create New User</h3>
 
             <form onSubmit={handleCreateUser} className="space-y-4">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Full Name</span>
-                </label>
-                <input
-                  type="text"
-                  className="input input-bordered"
-                  value={newUser.name}
-                  onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-                  required
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Full Name *</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="input input-bordered"
+                    value={newUser.name}
+                    onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Email *</span>
+                  </label>
+                  <input
+                    type="email"
+                    className="input input-bordered"
+                    value={newUser.email}
+                    onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">User Type *</span>
+                  </label>
+                  <select
+                    className="select select-bordered"
+                    value={newUser.userType}
+                    onChange={(e) =>
+                      setNewUser({
+                        ...newUser,
+                        userType: e.target.value,
+                        courseId: "",
+                        departmentId: "",
+                      })
+                    }
+                  >
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="faculty">Faculty</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
+
+                {newUser.userType === "student" && (
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Course *</span>
+                    </label>
+                    <select
+                      className="select select-bordered"
+                      value={newUser.courseId}
+                      onChange={(e) => setNewUser({ ...newUser, courseId: e.target.value })}
+                      required
+                    >
+                      <option value="">Select Course</option>
+                      {courseOptions.map((course) => (
+                        <option key={course.id} value={course.id}>
+                          {course.course_name} ({course.course_code})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                {["teacher", "faculty", "admin"].includes(newUser.userType) && (
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Department *</span>
+                    </label>
+                    <select
+                      className="select select-bordered"
+                      value={newUser.departmentId}
+                      onChange={(e) => setNewUser({ ...newUser, departmentId: e.target.value })}
+                      required
+                    >
+                      <option value="">Select Department</option>
+                      {departmentOptions.map((dept) => (
+                        <option key={dept.id} value={dept.id}>
+                          {dept.department_name} ({dept.department_code})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Phone</span>
+                  </label>
+                  <input
+                    type="tel"
+                    className="input input-bordered"
+                    value={newUser.phone}
+                    onChange={(e) => setNewUser({ ...newUser, phone: e.target.value })}
+                  />
+                </div>
+
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Date of Birth</span>
+                  </label>
+                  <input
+                    type="date"
+                    className="input input-bordered"
+                    value={newUser.dateOfBirth}
+                    onChange={(e) => setNewUser({ ...newUser, dateOfBirth: e.target.value })}
+                  />
+                </div>
               </div>
 
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <input
-                  type="email"
-                  className="input input-bordered"
-                  value={newUser.email}
-                  onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-                  required
-                />
-              </div>
-
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">User Type</span>
-                </label>
-                <select
-                  className="select select-bordered"
-                  value={newUser.userType}
-                  onChange={(e) => setNewUser({ ...newUser, userType: e.target.value })}
-                >
-                  <option value="student">Student</option>
-                  <option value="teacher">Teacher</option>
-                  <option value="faculty">Faculty</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </div>
-
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Phone (Optional)</span>
-                </label>
-                <input
-                  type="tel"
-                  className="input input-bordered"
-                  value={newUser.phone}
-                  onChange={(e) => setNewUser({ ...newUser, phone: e.target.value })}
-                />
-              </div>
-
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Address (Optional)</span>
+                  <span className="label-text">Address</span>
                 </label>
                 <textarea
                   className="textarea textarea-bordered"
@@ -315,16 +442,15 @@ export default function UserManagementPage() {
                 />
               </div>
 
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Date of Birth (Optional)</span>
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered"
-                  value={newUser.dateOfBirth}
-                  onChange={(e) => setNewUser({ ...newUser, dateOfBirth: e.target.value })}
-                />
+              <div className="alert alert-info">
+                <div>
+                  <h4 className="font-bold">Roll Number Generation:</h4>
+                  <p className="text-sm">
+                    {newUser.userType === "student"
+                      ? "Student roll numbers follow format: YYYY + Course Code (3 digits) + Serial Number (3 digits)"
+                      : "Staff roll numbers follow format: YYYY + Department Code (3 digits) + Serial Number (3 digits)"}
+                  </p>
+                </div>
               </div>
 
               <div className="modal-action">
@@ -351,14 +477,28 @@ export default function UserManagementPage() {
                 <div>
                   <h4 className="font-bold">User Details:</h4>
                   <p>
+                    <strong>Roll Number:</strong>{" "}
+                    <span className="font-mono bg-base-200 px-2 py-1 rounded">{createdUser.roll_number}</span>
+                  </p>
+                  <p>
                     <strong>Name:</strong> {createdUser.name}
                   </p>
                   <p>
                     <strong>Email:</strong> {createdUser.email}
                   </p>
                   <p>
-                    <strong>Type:</strong> {createdUser.userType}
+                    <strong>Type:</strong> {createdUser.user_type}
                   </p>
+                  {createdUser.course_name && (
+                    <p>
+                      <strong>Course:</strong> {createdUser.course_name}
+                    </p>
+                  )}
+                  {createdUser.department_name && (
+                    <p>
+                      <strong>Department:</strong> {createdUser.department_name}
+                    </p>
+                  )}
                 </div>
               </div>
 

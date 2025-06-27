@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import bcrypt from "bcryptjs"
 import pool from "@/lib/mysql"
 import { verifyToken, generateSecurePassword } from "@/lib/auth"
+import { generateRollNumber, getCourseOptions, getDepartmentOptions } from "@/lib/roll-number"
 import validator from "validator"
 
 export async function GET(request: NextRequest) {
@@ -17,25 +18,39 @@ export async function GET(request: NextRequest) {
     const limit = Number.parseInt(searchParams.get("limit") || "10")
     const offset = (page - 1) * limit
 
-    let query = "SELECT id, name, email, user_type, is_active, created_at FROM users"
+    // Check if requesting options
+    if (searchParams.get("options") === "true") {
+      const courses = await getCourseOptions()
+      const departments = await getDepartmentOptions()
+      return NextResponse.json({ courses, departments })
+    }
+
+    let query = `
+      SELECT u.id, u.roll_number, u.name, u.email, u.user_type, u.is_active, u.created_at,
+             cc.course_name, cc.course_code,
+             dc.department_name, dc.department_code
+      FROM users u
+      LEFT JOIN course_codes cc ON u.course_id = cc.id
+      LEFT JOIN department_codes dc ON u.department_id = dc.id
+    `
     const params: any[] = []
 
     if (userType && userType !== "all") {
-      query += " WHERE user_type = ?"
+      query += " WHERE u.user_type = ?"
       params.push(userType)
     }
 
-    query += " ORDER BY created_at DESC LIMIT ? OFFSET ?"
+    query += " ORDER BY u.created_at DESC LIMIT ? OFFSET ?"
     params.push(limit, offset)
 
     const [rows] = await pool.execute(query, params)
 
     // Get total count
-    let countQuery = "SELECT COUNT(*) as total FROM users"
+    let countQuery = "SELECT COUNT(*) as total FROM users u"
     const countParams: any[] = []
 
     if (userType && userType !== "all") {
-      countQuery += " WHERE user_type = ?"
+      countQuery += " WHERE u.user_type = ?"
       countParams.push(userType)
     }
 
@@ -64,7 +79,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
     }
 
-    const { name, email, userType, phone, address, dateOfBirth } = await request.json()
+    const { name, email, userType, phone, address, dateOfBirth, courseId, departmentId } = await request.json()
 
     // Validate input
     if (!name || !email || !userType) {
@@ -79,6 +94,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Invalid user type" }, { status: 400 })
     }
 
+    // Validate course/department requirements
+    if (userType === "student" && !courseId) {
+      return NextResponse.json({ message: "Course is required for students" }, { status: 400 })
+    }
+
+    if (["teacher", "faculty", "admin"].includes(userType) && !departmentId) {
+      return NextResponse.json({ message: "Department is required for staff members" }, { status: 400 })
+    }
+
     // Check if user already exists
     const [existingUsers] = await pool.execute("SELECT id FROM users WHERE email = ?", [email])
 
@@ -86,24 +110,53 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "User with this email already exists" }, { status: 400 })
     }
 
+    // Generate roll number
+    const rollNumber = await generateRollNumber(
+      userType,
+      userType === "student" ? courseId : undefined,
+      userType !== "student" ? departmentId : undefined,
+    )
+
     // Generate secure password
     const password = generateSecurePassword()
     const hashedPassword = await bcrypt.hash(password, 12)
 
-    // Create user
+    // Create user with UUID
     const [result] = await pool.execute(
-      `INSERT INTO users (name, email, password, user_type, phone, address, date_of_birth, is_active) 
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [name, email, hashedPassword, userType, phone || null, address || null, dateOfBirth || null, true],
+      `INSERT INTO users (id, roll_number, name, email, password, user_type, course_id, department_id, phone, address, date_of_birth, is_active) 
+       VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        rollNumber,
+        name,
+        email,
+        hashedPassword,
+        userType,
+        userType === "student" ? courseId : null,
+        userType !== "student" ? departmentId : null,
+        phone || null,
+        address || null,
+        dateOfBirth || null,
+        true,
+      ],
     )
+
+    // Get the created user
+    const [createdUser] = await pool.execute(
+      `SELECT u.id, u.roll_number, u.name, u.email, u.user_type,
+              cc.course_name, dc.department_name
+       FROM users u
+       LEFT JOIN course_codes cc ON u.course_id = cc.id
+       LEFT JOIN department_codes dc ON u.department_id = dc.id
+       WHERE u.roll_number = ?`,
+      [rollNumber],
+    )
+
+    const user = (createdUser as any[])[0]
 
     return NextResponse.json({
       message: "User created successfully",
       user: {
-        id: (result as any).insertId,
-        name,
-        email,
-        userType,
+        ...user,
         temporaryPassword: password,
       },
     })

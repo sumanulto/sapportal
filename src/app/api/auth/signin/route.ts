@@ -24,9 +24,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Invalid email format" }, { status: 400 })
     }
 
-    // Get user from MySQL database
+    // Get user from MySQL database with UUID
     const [rows] = await pool.execute(
-      "SELECT id, name, email, password, user_type, is_active FROM users WHERE email = ? AND user_type = ?",
+      `SELECT u.id, u.roll_number, u.name, u.email, u.password, u.user_type, u.is_active,
+              cc.course_name, dc.department_name
+       FROM users u
+       LEFT JOIN course_codes cc ON u.course_id = cc.id
+       LEFT JOIN department_codes dc ON u.department_id = dc.id
+       WHERE u.email = ? AND u.user_type = ?`,
       [email, userType],
     )
 
@@ -52,6 +57,7 @@ export async function POST(request: NextRequest) {
     // Create JWT token
     const token = await encrypt({
       userId: user.id,
+      rollNumber: user.roll_number,
       email: user.email,
       userType: user.user_type,
       name: user.name,

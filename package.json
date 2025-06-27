@@ -7,8 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed-admin": "node scripts/seed-admin.js",
-    "db-setup": "mysql -u root -p < scripts/database-schema.sql"
+    "db:setup": "mysql -u root -p < src/scripts/schema.sql",
+    "db:seed": "node src/scripts/seed.js",
+    "db:reset": "mysql -u root -p < src/scripts/schema.sql && node src/scripts/seed.js",
+    "setup": "npm run db:setup && npm run db:seed"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
