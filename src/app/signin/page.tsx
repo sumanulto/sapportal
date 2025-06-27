@@ -70,6 +70,7 @@ export default function SignInPage() {
         const error = await response.json()
         alert(error.message || "Sign in failed")
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       alert("An error occurred during sign in")
     } finally {
@@ -110,10 +111,10 @@ export default function SignInPage() {
                     key={type}
                     type="button"
                     onClick={() => setUserType(type as UserType)}
-                    className={`btn btn-outline ${userType === type ? "btn-active" : ""} flex-col h-auto py-3`}
+                    className={`btn btn-portal ${userType === type ? "btn-active" : ""} flex-col h-auto py-3 min-h-[4rem]`}
                   >
                     <Icon className="w-5 h-5 mb-1" />
-                    <span className="text-xs capitalize">{type}</span>
+                    <span className="text-xs capitalize font-medium">{type}</span>
                   </button>
                 )
               })}

@@ -5,7 +5,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="navbar bg-base-100 shadow-lg px-4 lg:px-8">
+      <header className="navbar mb-4 bg-base-100 shadow-lg px-4 lg:px-8">
         <div className="navbar-start">
           <div className="flex items-center gap-3">
             <div className="avatar">
@@ -78,7 +78,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="footer footer-center p-4 bg-base-200 text-base-content">
         <div>
-          <p>© 2025 SAP Portal. All rights reserved. Built with Next.js & DaisyUI</p>
+          <p>© 2025 Kraftamine. All rights reserved. Built with Next.js & DaisyUI</p>
         </div>
       </footer>
     </div>

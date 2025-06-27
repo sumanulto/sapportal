@@ -1,236 +1,342 @@
 @import "tailwindcss";
 
 @theme {
-  /* DaisyUI Color Variables */
-  --color-primary: #3b82f6;
-  --color-primary-content: #ffffff;
-  --color-secondary: #10b981;
-  --color-secondary-content: #ffffff;
-  --color-accent: #f59e0b;
-  --color-accent-content: #ffffff;
-  --color-neutral: #374151;
-  --color-neutral-content: #ffffff;
-  --color-base-100: #ffffff;
-  --color-base-200: #f3f4f6;
-  --color-base-300: #e5e7eb;
-  --color-base-content: #1f2937;
-  --color-info: #0ea5e9;
-  --color-info-content: #ffffff;
-  --color-success: #22c55e;
-  --color-success-content: #ffffff;
-  --color-warning: #f59e0b;
-  --color-warning-content: #ffffff;
-  --color-error: #ef4444;
-  --color-error-content: #ffffff;
-}
-
-/* DaisyUI Theme Variants */
-[data-theme="night"] {
-  --color-primary: #60a5fa;
-  --color-secondary: #34d399;
-  --color-accent: #fbbf24;
-  --color-neutral: #d1d5db;
-  --color-base-100: #1f2937;
-  --color-base-200: #374151;
-  --color-base-300: #4b5563;
-  --color-base-content: #f9fafb;
-}
-
-[data-theme="forest"] {
-  --color-primary: #22c55e;
-  --color-secondary: #10b981;
-  --color-accent: #84cc16;
-  --color-base-100: #f0fdf4;
-  --color-base-200: #dcfce7;
-  --color-base-300: #bbf7d0;
-  --color-base-content: #14532d;
-}
-
-[data-theme="lemonade"] {
-  --color-primary: #fbbf24;
-  --color-secondary: #f59e0b;
-  --color-accent: #eab308;
-  --color-base-100: #fffbeb;
-  --color-base-200: #fef3c7;
-  --color-base-300: #fde68a;
-  --color-base-content: #92400e;
-}
-
-[data-theme="nord"] {
-  --color-primary: #5e81ac;
-  --color-secondary: #81a1c1;
-  --color-accent: #88c0d0;
-  --color-base-100: #eceff4;
-  --color-base-200: #e5e9f0;
-  --color-base-300: #d8dee9;
-  --color-base-content: #2e3440;
+  --color-primary: 59 130 246;
+  --color-primary-content: 255 255 255;
+  --color-secondary: 16 185 129;
+  --color-secondary-content: 255 255 255;
+  --color-accent: 245 158 11;
+  --color-accent-content: 255 255 255;
+  --color-neutral: 55 65 81;
+  --color-neutral-content: 255 255 255;
+  --color-base-100: 255 255 255;
+  --color-base-200: 243 244 246;
+  --color-base-300: 229 231 235;
+  --color-base-content: 31 41 55;
+  --color-info: 14 165 233;
+  --color-info-content: 255 255 255;
+  --color-success: 34 197 94;
+  --color-success-content: 255 255 255;
+  --color-warning: 245 158 11;
+  --color-warning-content: 255 255 255;
+  --color-error: 239 68 68;
+  --color-error-content: 255 255 255;
 }
 
 @layer base {
+  :root {
+    /* DaisyUI Base Colors - Default Theme */
+    --color-primary: 59 130 246;
+    --color-primary-content: 255 255 255;
+    --color-secondary: 16 185 129;
+    --color-secondary-content: 255 255 255;
+    --color-accent: 245 158 11;
+    --color-accent-content: 255 255 255;
+    --color-neutral: 55 65 81;
+    --color-neutral-content: 255 255 255;
+    --color-base-100: 255 255 255;
+    --color-base-200: 243 244 246;
+    --color-base-300: 229 231 235;
+    --color-base-content: 31 41 55;
+    --color-info: 14 165 233;
+    --color-info-content: 255 255 255;
+    --color-success: 34 197 94;
+    --color-success-content: 255 255 255;
+    --color-warning: 245 158 11;
+    --color-warning-content: 255 255 255;
+    --color-error: 239 68 68;
+    --color-error-content: 255 255 255;
+  }
+
+  [data-theme="night"] {
+    --color-primary: 96 165 250;
+    --color-primary-content: 255 255 255;
+    --color-secondary: 52 211 153;
+    --color-secondary-content: 255 255 255;
+    --color-accent: 251 191 36;
+    --color-accent-content: 255 255 255;
+    --color-neutral: 209 213 219;
+    --color-neutral-content: 31 41 55;
+    --color-base-100: 31 41 55;
+    --color-base-200: 55 65 81;
+    --color-base-300: 75 85 99;
+    --color-base-content: 249 250 251;
+  }
+
+  [data-theme="forest"] {
+    --color-primary: 34 197 94;
+    --color-primary-content: 255 255 255;
+    --color-secondary: 16 185 129;
+    --color-secondary-content: 255 255 255;
+    --color-accent: 132 204 22;
+    --color-accent-content: 255 255 255;
+    --color-neutral: 55 65 81;
+    --color-neutral-content: 255 255 255;
+    --color-base-100: 240 253 244;
+    --color-base-200: 220 252 231;
+    --color-base-300: 187 247 208;
+    --color-base-content: 20 83 45;
+  }
+
+  [data-theme="lemonade"] {
+    --color-primary: 251 191 36;
+    --color-primary-content: 255 255 255;
+    --color-secondary: 245 158 11;
+    --color-secondary-content: 255 255 255;
+    --color-accent: 234 179 8;
+    --color-accent-content: 255 255 255;
+    --color-neutral: 55 65 81;
+    --color-neutral-content: 255 255 255;
+    --color-base-100: 255 251 235;
+    --color-base-200: 254 243 199;
+    --color-base-300: 253 230 138;
+    --color-base-content: 146 64 14;
+  }
+
+  [data-theme="nord"] {
+    --color-primary: 94 129 172;
+    --color-primary-content: 255 255 255;
+    --color-secondary: 129 161 193;
+    --color-secondary-content: 255 255 255;
+    --color-accent: 136 192 208;
+    --color-accent-content: 255 255 255;
+    --color-neutral: 76 86 106;
+    --color-neutral-content: 255 255 255;
+    --color-base-100: 236 239 244;
+    --color-base-200: 229 233 240;
+    --color-base-300: 216 222 233;
+    --color-base-content: 46 52 64;
+  }
+
   html {
     color-scheme: light;
+    scroll-behavior: smooth;
   }
 
   [data-theme="night"] {
     color-scheme: dark;
   }
 
+  * {
+    border-color: rgb(var(--color-base-300));
+  }
+
   body {
-    background-color: var(--color-base-200);
-    color: var(--color-base-content);
-  }
-
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: color-mix(in srgb, var(--color-base-content) 20%, transparent);
-    border-radius: 3px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: color-mix(in srgb, var(--color-base-content) 30%, transparent);
+    background-color: rgb(var(--color-base-200));
+    color: rgb(var(--color-base-content));
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-/* Pure DaisyUI Component Classes - No external dependencies */
 @layer components {
+  /* Button Components */
   .btn {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg border border-transparent transition-colors focus:outline-none disabled:opacity-50 disabled:pointer-events-none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+    background-color: rgb(var(--color-neutral));
+    color: rgb(var(--color-neutral-content));
+  }
+
+  .btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .btn:disabled {
+    opacity: 0.5;
+    pointer-events: none;
   }
 
   .btn-primary {
-    background-color: var(--color-primary);
-    color: var(--color-primary-content);
-  }
-
-  .btn-primary:hover {
-    background-color: color-mix(in srgb, var(--color-primary) 90%, black);
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-primary-content));
   }
 
   .btn-secondary {
-    background-color: var(--color-secondary);
-    color: var(--color-secondary-content);
+    background-color: rgb(var(--color-secondary));
+    color: rgb(var(--color-secondary-content));
+  }
+
+  .btn-accent {
+    background-color: rgb(var(--color-accent));
+    color: rgb(var(--color-accent-content));
   }
 
   .btn-ghost {
     background-color: transparent;
-    color: var(--color-base-content);
+    color: rgb(var(--color-base-content));
   }
 
   .btn-ghost:hover {
-    background-color: var(--color-base-200);
+    background-color: rgb(var(--color-base-200));
   }
 
   .btn-outline {
-    border: 1px solid currentColor;
-    background-color: transparent;
+    border: 2px solid rgb(var(--color-base-content) / 0.3);
+    background-color: rgb(var(--color-base-100));
+    color: rgb(var(--color-base-content));
+  }
+
+  .btn-outline:hover {
+    border-color: rgb(var(--color-primary));
+    background-color: rgb(var(--color-primary) / 0.1);
+    color: rgb(var(--color-primary));
   }
 
   .btn-circle {
-    @apply w-12 h-12 rounded-full p-0;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    padding: 0;
   }
 
   .btn-sm {
-    @apply px-3 py-1.5 text-xs;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
   }
 
   .btn-lg {
-    @apply px-6 py-3 text-base;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
   }
 
+  .btn-active {
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-primary-content));
+  }
+
+  /* Portal Type Button Variants */
+  .btn-portal {
+    border: 2px solid rgb(var(--color-base-content) / 0.2);
+    background-color: rgb(var(--color-base-100));
+    color: rgb(var(--color-base-content));
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+    transition: all 0.2s ease;
+  }
+
+  .btn-portal:hover {
+    border-color: rgb(var(--color-primary));
+    background-color: rgb(var(--color-primary) / 0.1);
+    color: rgb(var(--color-primary));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgb(0 0 0 / 0.15);
+  }
+
+  .btn-portal.btn-active {
+    border-color: rgb(var(--color-primary));
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-primary-content));
+    box-shadow: 0 4px 8px rgb(var(--color-primary) / 0.3);
+  }
+
+  /* Card Components */
   .card {
-    background-color: var(--color-base-100);
-    @apply rounded-lg shadow-md;
+    background-color: rgb(var(--color-base-100));
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
 
   .card-body {
-    @apply p-6;
+    padding: 1.5rem;
   }
 
   .card-title {
-    @apply text-xl font-bold mb-2;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: rgb(var(--color-base-content));
   }
 
+  .card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  /* Navigation Components */
   .navbar {
-    @apply flex items-center justify-between px-4 py-2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
     min-height: 4rem;
+    background-color: rgb(var(--color-base-100));
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   }
 
   .navbar-start {
-    @apply flex items-center flex-1;
+    display: flex;
+    align-items: center;
+    flex: 1;
   }
 
   .navbar-end {
-    @apply flex items-center;
+    display: flex;
+    align-items: center;
   }
 
   .menu {
-    @apply flex flex-col space-y-1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 
   .menu li a {
-    @apply flex items-center px-4 py-2 rounded-lg transition-colors;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    color: rgb(var(--color-base-content));
+    text-decoration: none;
   }
 
   .menu li a:hover {
-    background-color: var(--color-base-200);
+    background-color: rgb(var(--color-base-200));
   }
 
+  .menu li a.active {
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-primary-content));
+  }
+
+  .menu-title {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgb(var(--color-base-content) / 0.7);
+  }
+
+  /* Dropdown Components - Fixed for proper interaction */
   .dropdown {
-    @apply relative inline-block;
-  }
-
-  .dropdown-content {
-    @apply absolute z-50 mt-2 rounded-lg border min-w-max;
-    background-color: var(--color-base-100);
-    border-color: var(--color-base-300);
-  }
-
-  .dropdown-end .dropdown-content {
-    @apply right-0;
-  }
-
-  .dropdown-top .dropdown-content {
-    @apply bottom-full mb-2 mt-0;
-  }
-
-  /* Add these dropdown styles after the existing dropdown styles */
-
-  .dropdown:hover .dropdown-content,
-  .dropdown:focus-within .dropdown-content {
-    display: block;
-  }
-
-  .dropdown-content {
-    display: none;
-  }
-
-  .dropdown[tabindex]:focus .dropdown-content,
-  .dropdown > *:focus + .dropdown-content {
-    display: block;
-  }
-
-  /* Ensure dropdowns work properly */
-  .dropdown > summary::-webkit-details-marker {
-    display: none;
+    position: relative;
+    display: inline-block;
   }
 
   .dropdown-content {
     position: absolute;
-    z-index: 50;
+    z-index: 1000;
     margin-top: 0.5rem;
-    background-color: var(--color-base-100);
     border-radius: 0.5rem;
-    border: 1px solid var(--color-base-300);
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    border: 1px solid rgb(var(--color-base-300));
     min-width: max-content;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    background-color: rgb(var(--color-base-100));
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease-in-out;
+    pointer-events: none;
   }
 
   .dropdown-end .dropdown-content {
@@ -241,229 +347,473 @@
     bottom: 100%;
     margin-bottom: 0.5rem;
     margin-top: 0;
+    transform: translateY(10px);
   }
 
-  /* Menu item hover states */
-  .menu li > *:hover {
-    background-color: var(--color-base-200);
-    color: var(--color-base-content);
+  /* Show dropdown on hover and focus */
+  .dropdown:hover .dropdown-content,
+  .dropdown:focus-within .dropdown-content,
+  .dropdown[tabindex]:focus .dropdown-content,
+  .dropdown > *:focus + .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
-  .menu li > *.active,
-  .menu li > *:active {
-    background-color: var(--color-primary);
-    color: var(--color-primary-content);
+  /* Keep dropdown open when hovering over content */
+  .dropdown-content:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
-  .input {
-    @apply w-full px-3 py-2 border rounded-lg;
-    background-color: var(--color-base-100);
-    color: var(--color-base-content);
-    border-color: var(--color-base-300);
+  /* Dropdown menu items */
+  .dropdown-content .menu {
+    padding: 0.5rem;
+    margin: 0;
   }
 
-  .input:focus {
-    border-color: var(--color-primary);
+  .dropdown-content .menu li {
+    margin: 0;
+  }
+
+  .dropdown-content .menu li a,
+  .dropdown-content .menu li button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s;
+    color: rgb(var(--color-base-content));
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+
+  .dropdown-content .menu li a:hover,
+  .dropdown-content .menu li button:hover {
+    background-color: rgb(var(--color-base-200));
+  }
+
+  .dropdown-content .menu li a:focus,
+  .dropdown-content .menu li button:focus {
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-primary-content));
     outline: none;
   }
 
+  /* Form Components */
+  .input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid rgb(var(--color-base-300));
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    background-color: rgb(var(--color-base-100));
+    color: rgb(var(--color-base-content));
+  }
+
+  .input:focus {
+    border-color: rgb(var(--color-primary));
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(var(--color-primary) / 0.2);
+  }
+
+  .input-bordered {
+    border-color: rgb(var(--color-base-300));
+  }
+
+  .textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid rgb(var(--color-base-300));
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    background-color: rgb(var(--color-base-100));
+    color: rgb(var(--color-base-content));
+    min-height: 3rem;
+    resize: vertical;
+  }
+
+  .textarea:focus {
+    border-color: rgb(var(--color-primary));
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(var(--color-primary) / 0.2);
+  }
+
+  .textarea-bordered {
+    border-color: rgb(var(--color-base-300));
+  }
+
+  .select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid rgb(var(--color-base-300));
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    background-color: rgb(var(--color-base-100));
+    color: rgb(var(--color-base-content));
+  }
+
+  .select:focus {
+    border-color: rgb(var(--color-primary));
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(var(--color-primary) / 0.2);
+  }
+
   .form-control {
-    @apply flex flex-col space-y-1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 
   .label {
-    @apply flex items-center justify-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .label-text {
-    @apply text-sm font-medium;
-    color: var(--color-base-content);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgb(var(--color-base-content));
   }
 
+  /* Stats Components */
   .stat {
-    @apply p-4;
+    padding: 1rem;
   }
 
   .stat-title {
-    @apply text-sm;
-    color: color-mix(in srgb, var(--color-base-content) 70%, transparent);
+    font-size: 0.875rem;
+    color: rgb(var(--color-base-content) / 0.7);
   }
 
   .stat-value {
-    @apply text-2xl font-bold;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgb(var(--color-base-content));
+  }
+
+  .stat-desc {
+    font-size: 0.75rem;
+    color: rgb(var(--color-base-content) / 0.6);
   }
 
   .stat-figure {
-    @apply flex items-center justify-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
+  /* Badge Components */
   .badge {
-    @apply inline-flex items-center px-2 py-1 text-xs font-medium rounded-full;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 9999px;
+    background-color: rgb(var(--color-neutral));
+    color: rgb(var(--color-neutral-content));
   }
 
   .badge-primary {
-    background-color: var(--color-primary);
-    color: var(--color-primary-content);
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-primary-content));
+  }
+
+  .badge-secondary {
+    background-color: rgb(var(--color-secondary));
+    color: rgb(var(--color-secondary-content));
+  }
+
+  .badge-accent {
+    background-color: rgb(var(--color-accent));
+    color: rgb(var(--color-accent-content));
   }
 
   .badge-success {
-    background-color: var(--color-success);
-    color: var(--color-success-content);
+    background-color: rgb(var(--color-success));
+    color: rgb(var(--color-success-content));
   }
 
   .badge-warning {
-    background-color: var(--color-warning);
-    color: var(--color-warning-content);
+    background-color: rgb(var(--color-warning));
+    color: rgb(var(--color-warning-content));
+  }
+
+  .badge-error {
+    background-color: rgb(var(--color-error));
+    color: rgb(var(--color-error-content));
   }
 
   .badge-info {
-    background-color: var(--color-info);
-    color: var(--color-info-content);
+    background-color: rgb(var(--color-info));
+    color: rgb(var(--color-info-content));
   }
 
   .badge-sm {
-    @apply px-1.5 py-0.5 text-xs;
+    padding: 0.125rem 0.375rem;
+    font-size: 0.75rem;
   }
 
   .badge-xs {
-    @apply px-1 py-0.5 text-xs;
+    padding: 0.125rem 0.25rem;
+    font-size: 0.75rem;
   }
 
+  /* Alert Components */
   .alert {
-    @apply flex items-center p-4 rounded-lg;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(var(--color-base-300));
+    background-color: rgb(var(--color-base-200));
+    color: rgb(var(--color-base-content));
   }
 
   .alert-info {
-    background-color: color-mix(in srgb, var(--color-info) 10%, transparent);
-    color: var(--color-info);
-    border: 1px solid color-mix(in srgb, var(--color-info) 20%, transparent);
+    background-color: rgb(var(--color-info) / 0.1);
+    color: rgb(var(--color-info));
+    border-color: rgb(var(--color-info) / 0.2);
   }
 
+  .alert-success {
+    background-color: rgb(var(--color-success) / 0.1);
+    color: rgb(var(--color-success));
+    border-color: rgb(var(--color-success) / 0.2);
+  }
+
+  .alert-warning {
+    background-color: rgb(var(--color-warning) / 0.1);
+    color: rgb(var(--color-warning));
+    border-color: rgb(var(--color-warning) / 0.2);
+  }
+
+  .alert-error {
+    background-color: rgb(var(--color-error) / 0.1);
+    color: rgb(var(--color-error));
+    border-color: rgb(var(--color-error) / 0.2);
+  }
+
+  /* Divider Components */
   .divider {
-    @apply flex items-center my-4;
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
   }
 
   .divider::before,
   .divider::after {
-    @apply flex-1 h-px content-[''];
-    background-color: var(--color-base-300);
+    flex: 1;
+    height: 1px;
+    content: "";
+    background-color: rgb(var(--color-base-300));
   }
 
   .divider:not(:empty)::before {
-    @apply mr-4;
+    margin-right: 1rem;
   }
 
   .divider:not(:empty)::after {
-    @apply ml-4;
+    margin-left: 1rem;
   }
 
+  /* Avatar Components */
   .avatar {
-    @apply relative inline-flex;
+    position: relative;
+    display: inline-flex;
   }
 
   .avatar .placeholder {
-    @apply flex items-center justify-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
+  /* Footer Components */
   .footer {
-    @apply p-4;
+    padding: 1rem;
+    background-color: rgb(var(--color-base-200));
+    color: rgb(var(--color-base-content));
   }
 
   .footer-center {
-    @apply text-center;
+    text-align: center;
   }
 
+  /* Hero Components */
   .hero {
-    @apply flex items-center justify-center min-h-screen;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
   }
 
   .hero-content {
-    @apply text-center;
+    text-align: center;
   }
 
+  /* Indicator Components */
   .indicator {
-    @apply relative inline-flex;
+    position: relative;
+    display: inline-flex;
   }
 
   .indicator-item {
-    @apply absolute -top-1 -right-1;
+    position: absolute;
+    top: -0.25rem;
+    right: -0.25rem;
   }
 
+  /* Loading Components */
   .loading {
-    @apply inline-block animate-spin rounded-full border-2 border-current border-t-transparent;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
   }
 
   .loading-spinner {
-    @apply w-4 h-4;
+    width: 1rem;
+    height: 1rem;
   }
 
   .loading-lg {
-    @apply w-8 h-8;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Table Components */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table th,
+  .table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgb(var(--color-base-300));
+  }
+
+  .table th {
+    font-weight: 600;
+    background-color: rgb(var(--color-base-200));
+  }
+
+  .table-zebra tbody tr:nth-child(even) {
+    background-color: rgb(var(--color-base-200));
   }
 }
 
-/* DaisyUI Color Utilities */
 @layer utilities {
   .text-primary {
-    color: var(--color-primary);
+    color: rgb(var(--color-primary));
   }
   .text-secondary {
-    color: var(--color-secondary);
+    color: rgb(var(--color-secondary));
   }
   .text-accent {
-    color: var(--color-accent);
+    color: rgb(var(--color-accent));
   }
   .text-base-content {
-    color: var(--color-base-content);
+    color: rgb(var(--color-base-content));
   }
   .text-info {
-    color: var(--color-info);
+    color: rgb(var(--color-info));
   }
   .text-success {
-    color: var(--color-success);
+    color: rgb(var(--color-success));
   }
   .text-warning {
-    color: var(--color-warning);
+    color: rgb(var(--color-warning));
   }
   .text-error {
-    color: var(--color-error);
+    color: rgb(var(--color-error));
   }
 
   .bg-primary {
-    background-color: var(--color-primary);
+    background-color: rgb(var(--color-primary));
   }
   .bg-secondary {
-    background-color: var(--color-secondary);
+    background-color: rgb(var(--color-secondary));
   }
   .bg-accent {
-    background-color: var(--color-accent);
+    background-color: rgb(var(--color-accent));
   }
   .bg-base-100 {
-    background-color: var(--color-base-100);
+    background-color: rgb(var(--color-base-100));
   }
   .bg-base-200 {
-    background-color: var(--color-base-200);
+    background-color: rgb(var(--color-base-200));
   }
   .bg-base-300 {
-    background-color: var(--color-base-300);
+    background-color: rgb(var(--color-base-300));
   }
   .bg-info {
-    background-color: var(--color-info);
+    background-color: rgb(var(--color-info));
   }
   .bg-success {
-    background-color: var(--color-success);
+    background-color: rgb(var(--color-success));
   }
   .bg-warning {
-    background-color: var(--color-warning);
+    background-color: rgb(var(--color-warning));
   }
   .bg-error {
-    background-color: var(--color-error);
+    background-color: rgb(var(--color-error));
   }
 
   .border-base-300 {
-    border-color: var(--color-base-300);
+    border-color: rgb(var(--color-base-300));
   }
   .border-primary {
-    border-color: var(--color-primary);
+    border-color: rgb(var(--color-primary));
+  }
+
+  .text-primary-content {
+    color: rgb(var(--color-primary-content));
+  }
+  .text-secondary-content {
+    color: rgb(var(--color-secondary-content));
+  }
+  .text-accent-content {
+    color: rgb(var(--color-accent-content));
+  }
+  .text-neutral-content {
+    color: rgb(var(--color-neutral-content));
+  }
+  .text-info-content {
+    color: rgb(var(--color-info-content));
+  }
+  .text-success-content {
+    color: rgb(var(--color-success-content));
+  }
+  .text-warning-content {
+    color: rgb(var(--color-warning-content));
+  }
+  .text-error-content {
+    color: rgb(var(--color-error-content));
+  }
+
+  .bg-primary\/10 {
+    background-color: rgb(var(--color-primary) / 0.1);
+  }
+  .bg-primary\/20 {
+    background-color: rgb(var(--color-primary) / 0.2);
   }
 }

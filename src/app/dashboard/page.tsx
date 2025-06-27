@@ -6,44 +6,38 @@ import { Users, BookOpen, Calendar, DollarSign, TrendingUp, Clock, Award, Bell }
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null)
   const [stats, setStats] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const userData = localStorage.getItem("user")
     if (userData) {
       const parsedUser = JSON.parse(userData)
       setUser(parsedUser)
-
-      // Mock stats based on user type
-      const mockStats = {
-        student: {
-          attendance: 85,
-          gpa: 3.7,
-          assignments: 12,
-          fees: 2500,
-        },
-        teacher: {
-          classes: 6,
-          students: 180,
-          assignments: 45,
-          attendance: 92,
-        },
-        faculty: {
-          departments: 4,
-          teachers: 25,
-          students: 450,
-          courses: 32,
-        },
-        admin: {
-          totalUsers: 1250,
-          activeUsers: 1180,
-          departments: 8,
-          revenue: 125000,
-        },
-      }
-
-      setStats(mockStats[parsedUser.userType as keyof typeof mockStats])
+      fetchStats(parsedUser.id, parsedUser.userType)
     }
   }, [])
+
+  const fetchStats = async (userId: number, userType: string) => {
+    try {
+      const response = await fetch(`/api/dashboard/stats?userId=${userId}&userType=${userType}`)
+      if (response.ok) {
+        const data = await response.json()
+        setStats(data.stats)
+      }
+    } catch (error) {
+      console.error("Error fetching stats:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    )
+  }
 
   if (!user || !stats) {
     return (
