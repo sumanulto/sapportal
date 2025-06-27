@@ -1,4 +1,4 @@
-# 🎓 SAP Portal - Student Academic Portal
+# 🎓 SAP Portal - Student Academic Portal (Under Development)
 
 A comprehensive academic management system built with **Next.js 15**, **MySQL**, **JWT Authentication**, and **DaisyUI**. This portal serves students, teachers, faculty, and administrators with role-based access and features.
 
