@@ -99,7 +99,7 @@ Create a `.env.local` file in the root directory:
 cp .env.example .env.local
 ```
 
-Edit `.env.local` with your configuration:
+### 🌐 Example `.env` File
 
 ```env
 # Database Configuration
