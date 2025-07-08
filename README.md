@@ -118,14 +118,14 @@ NEXTAUTH_URL=http://localhost:3000
 
 ## 🗄️ Database Setup
 
-### Option 1: Automated Setup (Recommended)
+### Option 1: Automated Setup (Under Progress)
 
 ```bash
 # Setup database and seed data in one command
 npm run setup
 ```
 
-### Option 2: Manual Setup
+### Option 2: Manual Setup (Under Progress)
 
 ```bash
 # 1. Create database and tables
@@ -147,10 +147,12 @@ If you prefer manual setup:
 CREATE DATABASE sap_portal;
 
 -- 2. Run the schema
-mysql -u root -p sap_portal < scripts/schema.sql
+mysql -u root -p sap_portal < scripts/database-schema.sql
+or
+go to database and paste the code directly
 
 -- 3. Run the seed script
-node scripts/seed.js
+node scripts/seed-admin-uuid.js
 ```
 
 ## ▶️ Running the Application
