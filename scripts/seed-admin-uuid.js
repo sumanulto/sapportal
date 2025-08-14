@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 const dbConfig = {
   host: process.env.DB_HOST || "localhost",
   user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "",
+  password: process.env.DB_PASSWORD || "Sumit@9957",
   database: process.env.DB_NAME || "sap_portal",
 };
 

@@ -2,8 +2,8 @@
 // Creates initial admin user and sample data
 // Usage: node scripts/seed.js
 
-const mysql = require("mysql2/promise")
-const bcrypt = require("bcryptjs")
+import mysql from "mysql2/promise"
+import bcrypt from "bcryptjs"
 
 const dbConfig = {
   host: process.env.DB_HOST || "localhost",
