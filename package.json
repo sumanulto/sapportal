@@ -1,6 +1,7 @@
 {
   "name": "sap-portal",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -18,11 +19,13 @@
     "dotenv": "^16.5.0",
     "jose": "^6.0.11",
     "lucide-react": "^0.408.0",
+    "my-module": "^1.0.0",
     "mysql2": "^3.6.5",
     "next": "15.3.4",
     "rate-limiter-flexible": "^7.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "uuid": "^11.1.0",
     "validator": "^13.15.15"
   },
   "devDependencies": {
