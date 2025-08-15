@@ -76,34 +76,39 @@ export default function Sidebar({ userType }: SidebarProps) {
   const items = menuItems[userType]
 
   return (
-    <aside className="w-64 bg-base-100 shadow-lg fixed left-0 top-16 h-[calc(100vh-4rem)] overflow-y-auto">
-      <div className="p-4">
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-base-content capitalize">{userType} Menu</h2>
-          <p className="text-sm text-base-content/70">Navigate your portal</p>
-        </div>
+    <aside
+  className="w-64 bg-base-100 shadow-lg fixed left-0 top-16 h-[calc(100vh-4rem)] overflow-y-auto z-50"
+>
+  <div className="p-4">
+    <div className="mb-6">
+      <h2 className="text-lg font-semibold text-base-content capitalize">{userType} Menu</h2>
+      <p className="text-sm text-base-content/70">Navigate your portal</p>
+    </div>
 
-        <ul className="menu p-0 space-y-1">
-          {items.map((item) => {
-            const Icon = item.icon
-            const isActive = pathname === item.href
+    <ul className="menu p-0 space-y-1">
+      {items.map((item) => {
+        const Icon = item.icon
+        const isActive = pathname === item.href
 
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive ? "bg-primary text-primary-content" : "hover:bg-base-200 text-base-content"
-                  }`}
-                >
-                  <Icon className="w-5 h-5" />
-                  <span className="font-medium">{item.label}</span>
-                </Link>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-    </aside>
+        return (
+          <li key={item.href}>
+            <Link
+              href={item.href}
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                isActive
+                  ? "bg-primary text-primary-content"
+                  : "hover:bg-base-200 text-base-content"
+              }`}
+            >
+              <Icon className="w-5 h-5" />
+              <span className="font-medium">{item.label}</span>
+            </Link>
+          </li>
+        )
+      })}
+    </ul>
+  </div>
+</aside>
+
   )
 }

@@ -48,7 +48,7 @@ export default function Dashboard() {
   }
 
   const renderStudentDashboard = () => (
-    <div className="space-y-6">
+    <div className="space-y-6 pt-16">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="stat bg-base-100 rounded-lg shadow">
           <div className="stat-figure text-primary">
@@ -162,7 +162,7 @@ export default function Dashboard() {
   )
 
   const renderTeacherDashboard = () => (
-    <div className="space-y-6">
+    <div className="space-y-6 pt-16">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="stat bg-base-100 rounded-lg shadow">
           <div className="stat-figure text-primary">
@@ -263,7 +263,7 @@ export default function Dashboard() {
   )
 
   const renderAdminDashboard = () => (
-    <div className="space-y-6">
+    <div className="space-y-6 pt-16">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="stat bg-base-100 rounded-lg shadow">
           <div className="stat-figure text-primary">
@@ -334,7 +334,7 @@ export default function Dashboard() {
               <div className="flex items-center gap-3">
                 <div className="avatar placeholder">
                   <div className="bg-primary text-primary-content rounded-full w-8">
-                    <span className="text-xs">U</span>
+                    <span className="text-xs flex justify-center items-center">U</span>
                   </div>
                 </div>
                 <div className="flex-1">
@@ -345,7 +345,7 @@ export default function Dashboard() {
               <div className="flex items-center gap-3">
                 <div className="avatar placeholder">
                   <div className="bg-secondary text-secondary-content rounded-full w-8">
-                    <span className="text-xs">S</span>
+                    <span className="text-xs flex justify-center items-center">S</span>
                   </div>
                 </div>
                 <div className="flex-1">
@@ -356,7 +356,7 @@ export default function Dashboard() {
               <div className="flex items-center gap-3">
                 <div className="avatar placeholder">
                   <div className="bg-accent text-accent-content rounded-full w-8">
-                    <span className="text-xs">D</span>
+                    <span className="text-xs flex justify-center items-center">D</span>
                   </div>
                 </div>
                 <div className="flex-1">
@@ -372,7 +372,7 @@ export default function Dashboard() {
   )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pt-16">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-base-content">Welcome back, {user.name}!</h1>

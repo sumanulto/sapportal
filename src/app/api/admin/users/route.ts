@@ -1,4 +1,4 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import bcrypt from "bcryptjs"
 import pool from "@/lib/mysql"
 import { verifyToken, generateSecurePassword } from "@/lib/auth"
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     const limit = Number.parseInt(searchParams.get("limit") || "10")
     const offset = (page - 1) * limit
 
-    // Check if requesting options
+    // Options for create user form
     if (searchParams.get("options") === "true") {
       const courses = await getCourseOptions()
       const departments = await getDepartmentOptions()
@@ -45,10 +45,9 @@ export async function GET(request: NextRequest) {
 
     const [rows] = await pool.execute(query, params)
 
-    // Get total count
+    // Total count
     let countQuery = "SELECT COUNT(*) as total FROM users u"
     const countParams: any[] = []
-
     if (userType && userType !== "all") {
       countQuery += " WHERE u.user_type = ?"
       countParams.push(userType)
@@ -81,7 +80,6 @@ export async function POST(request: NextRequest) {
 
     const { name, email, userType, phone, address, dateOfBirth, courseId, departmentId } = await request.json()
 
-    // Validate input
     if (!name || !email || !userType) {
       return NextResponse.json({ message: "Name, email, and user type are required" }, { status: 400 })
     }
@@ -94,7 +92,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Invalid user type" }, { status: 400 })
     }
 
-    // Validate course/department requirements
     if (userType === "student" && !courseId) {
       return NextResponse.json({ message: "Course is required for students" }, { status: 400 })
     }
@@ -103,26 +100,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Department is required for staff members" }, { status: 400 })
     }
 
-    // Check if user already exists
     const [existingUsers] = await pool.execute("SELECT id FROM users WHERE email = ?", [email])
-
     if ((existingUsers as any[]).length > 0) {
       return NextResponse.json({ message: "User with this email already exists" }, { status: 400 })
     }
 
-    // Generate roll number
     const rollNumber = await generateRollNumber(
       userType,
       userType === "student" ? courseId : undefined,
       userType !== "student" ? departmentId : undefined,
     )
 
-    // Generate secure password
     const password = generateSecurePassword()
     const hashedPassword = await bcrypt.hash(password, 12)
 
-    // Create user with UUID
-    const [result] = await pool.execute(
+    await pool.execute(
       `INSERT INTO users (id, roll_number, name, email, password, user_type, course_id, department_id, phone, address, date_of_birth, is_active) 
        VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
@@ -140,7 +132,6 @@ export async function POST(request: NextRequest) {
       ],
     )
 
-    // Get the created user
     const [createdUser] = await pool.execute(
       `SELECT u.id, u.roll_number, u.name, u.email, u.user_type,
               cc.course_name, dc.department_name
@@ -162,6 +153,29 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error("Create user error:", error)
+    return NextResponse.json({ message: "Internal server error" }, { status: 500 })
+  }
+}
+
+// Bulk delete
+export async function DELETE(request: NextRequest) {
+  try {
+    const session = await verifyToken(request)
+    if (!session || session.userType !== "admin") {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+    }
+
+    const { ids } = await request.json()
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return NextResponse.json({ message: "No user IDs provided" }, { status: 400 })
+    }
+
+    const placeholders = ids.map(() => "?").join(",")
+    await pool.execute(`DELETE FROM users WHERE id IN (${placeholders})`, ids)
+
+    return NextResponse.json({ message: "Selected users deleted successfully" })
+  } catch (error) {
+    console.error("Bulk delete error:", error)
     return NextResponse.json({ message: "Internal server error" }, { status: 500 })
   }
 }

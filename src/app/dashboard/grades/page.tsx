@@ -92,7 +92,7 @@ export default function GradesPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pt-16">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-base-content">My Grades</h1>
         <div className="form-control">

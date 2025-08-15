@@ -19,11 +19,11 @@ export default function Header({ user }: HeaderProps) {
   }
 
   return (
-    <header className="navbar bg-base-100 shadow-lg px-6 sticky top-0 z-50">
+    <header className="navbar w-full bg-base-100 shadow-lg px-6 fixed z-50">
       <div className="navbar-start">
         <div className="flex items-center gap-3">
           <div className="avatar">
-            <div className="w-10 rounded-full bg-primary flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
               <GraduationCap className="w-6 h-6 text-primary-content" />
             </div>
           </div>
@@ -62,11 +62,11 @@ export default function Header({ user }: HeaderProps) {
           </div>
 
           {/* Profile Dropdown */}
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end ">
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar hover:bg-base-200 transition-colors"
+              className="btn btn-ghost btn-circle  avatar hover:bg-base-200 transition-colors"
             >
               <div className="w-10 rounded-full bg-primary/20 flex items-center justify-center">
                 <User className="w-5 h-5 text-primary" />
